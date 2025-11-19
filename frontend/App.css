@@ -1,0 +1,375 @@
+/* --- GLOBAL STYLES & VARIABLES --- */
+:root {
+  --primary-purple: #100f0f; /* Primary Purple (Used only for buttons) */
+  --primary-green: #06d6a0; /* A friendly green (used for correct answers) */
+  --primary-blue: #080808; /* Dark Blue (Used for selection, score highlight, and primary text) */
+  --correct-bg: #e6fffa;
+  --correct-border: #38a169;
+  --incorrect-bg: #fff5f5;
+  --incorrect-border: #e53e3e;
+  --light-gray: #f7f9fc;
+  --dark-text: #333;
+  --light-text: #555;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(120deg, #f3e7e9 0%, #e3eeff 100%);
+  color: var(--dark-text);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+/* --- APP CONTAINER --- */
+.app-container {
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 2rem 2.5rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+h1, h2, h3 {
+  color: var(--dark-text);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2.25rem;
+  text-align: center;
+  color: var(--primary-blue);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.75rem;
+  border-bottom: 2px solid var(--primary-green);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  color: var(--light-text);
+  line-height: 1.6;
+}
+
+/* --- BUTTONS (Primary) --- */
+button {
+  /* Button color remains purple */
+  background: var(--primary-purple); 
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  transition: all 0.2s ease;
+  /* Updated shadow to match the purple color */
+  box-shadow: 0 4px 10px rgba(106, 0, 255, 0.3);
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  /* Darker purple on hover */
+  background: #5A00DC;
+  box-shadow: 0 6px 14px rgba(20, 19, 20, 0.4);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- INPUT CONTAINER --- */
+.input-container p {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box; 
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+}
+
+/* --- QUIZ CONTAINER & QUESTION CARD --- */
+.quiz-container .question-card {
+  background: #ffffff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* --- STYLING THE OPTIONS (Selection is BLUE) --- */
+.option-label input[type="radio"] {
+  display: none;
+}
+
+.option-label {
+  display: block;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  padding-left: 3.5rem; 
+}
+
+.option-label::before {
+  content: '';
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.option-label.selected::before {
+  border-color: var(--primary-blue); 
+  background-color: var(--primary-blue); 
+}
+
+.option-label.selected::after {
+  content: '';
+  position: absolute;
+  left: 1.625rem; 
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  width: 8px;
+  background: white;
+  border-radius: 50%;
+}
+
+.option-label:hover {
+  border-color: var(--primary-blue); 
+  background: #f4f8ff;
+}
+
+.option-label.selected {
+  border-color: var(--primary-blue);
+  background: #f4f8ff;
+  font-weight: 700;
+  color: var(--primary-blue);
+}
+
+
+/* --- RESULTS SCREEN (Score is BLUE) --- */
+.results-container .score {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--primary-blue); 
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.feedback-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.feedback-card {
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 6px solid;
+}
+
+.feedback-card.correct {
+  background: var(--correct-bg);
+  border-color: var(--correct-border);
+}
+
+.feedback-card.incorrect {
+  background: var(--incorrect-bg);
+  border-color: var(--incorrect-border);
+}
+
+.feedback-card p {
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+.feedback-card .correct-answer {
+  color: var(--correct-border);
+  font-weight: 700;
+}
+.feedback-card .explanation {
+  font-weight: 400;
+  color: var(--light-text);
+  margin-top: 0.75rem;
+}
+
+/* --- Utility Classes --- */
+.error-message {
+  background: var(--incorrect-bg);
+  border: 1px solid var(--incorrect-border);
+  color: var(--incorrect-border);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 1.5rem;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+/* --- NEW: Divider --- */
+hr.divider {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 2.5rem 0;
+}
+
+/* --- NEW: Past Scores List --- */
+.past-scores-container {
+  margin-top: 2rem;
+}
+.past-scores-container h2 {
+  color: var(--primary-purple);
+  border-bottom-color: var(--primary-purple);
+}
+
+.scores-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: var(--light-gray);
+  border-radius: 8px;
+}
+
+.score-topic {
+  font-weight: 600;
+  color: var(--dark-text);
+}
+
+.score-date {
+  font-size: 0.9rem;
+  color: var(--light-text);
+}
+
+.score-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-blue);
+}
+
+/* --- Login Screen --- */
+.login-container {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.login-box {
+  max-width: 400px;
+  margin: 2rem auto;
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.login-box input {
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* --- User Header --- */
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 2rem;
+}
+
+.logout-btn {
+  width: auto;
+  margin: 0;
+  background: #6c757d; 
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  box-shadow: none;
+}
+.logout-btn:hover {
+  background: #5a6268;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+  .app-container {
+    margin: 0;
+    border-radius: 0;
+    padding: 1rem 1.5rem;
+  }
+  header {
+    border-radius: 0;
+  }
+  main {
+    padding: 20px;
+  }
+  .score-item {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .score-topic {
+    width: 100%;
+  }
+}
